@@ -47,6 +47,11 @@ class WishListView(View):
         context = INFO
         return render(request, 'myshop/wishlist.html', context)
 
+class ChekoutView(View):
+    def get(self, request):
+        context = INFO
+        return render(request, 'myshop/checkout.html', context)
+
 
 class ShopViews(View):
     def get(self, request):
