@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User as UserAuth
 
 
-
 # Create your models here.
 
 
@@ -39,5 +38,4 @@ class Cart(models.Model):
     count = models.IntegerField()
 
     class Meta:
-        unique_together = (('user', 'product'), )
-
+        unique_together = (('user', 'product'),)
