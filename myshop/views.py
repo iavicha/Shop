@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .settings.base import INFO
+from shop_api.models import Product, Cart
 
 
 # Create your views here.
@@ -24,9 +25,24 @@ class BlogView(View):
         return render(request, 'myshop/blog.html', context)
 
 
-class CartView(View):
+class CartView(LoginRequiredMixin, View):
+    # Гд
     def get(self, request):
+        cart_query_set = Cart.objects.filter(user__auth_user__username=request.user)
+        d = {'page_obj': [
+            {
+                'image': ...,
+                'name': ...,
+                'discount': ...,
+                'price': ...,
+                'discount_price': ...,
+
+            }
+        ]}
         context = INFO
+        total_price = 0
+        context['page_obj'] = cart_query_set
+        context['total_price'] = total_price
         return render(request, 'myshop/cart.html', context)
 
 
@@ -47,6 +63,7 @@ class WishListView(View):
         context = INFO
         return render(request, 'myshop/wishlist.html', context)
 
+
 class ChekoutView(View):
     def get(self, request):
         context = INFO
@@ -55,15 +72,20 @@ class ChekoutView(View):
 
 class ShopViews(View):
     def get(self, request):
+        page_obj = Product.objects.all()
+        print(page_obj)
         d = {'page_obj': [
             {
                 'image': ...,
                 'name': ...,
                 'discount': ...,
-                'fullprice': ...,
-                'pricesale': ...,
+                'price': ...,
+                'discount_price': ...,
 
             }
         ]}
         context = INFO
+        context['page_obj'] = page_obj
+        print([product.image for product in page_obj])
+
         return render(request, 'myshop/shop.html', context)

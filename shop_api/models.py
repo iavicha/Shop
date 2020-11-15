@@ -10,6 +10,8 @@ class User(models.Model):
     first_name = models.CharField(max_length=25)
     last_name = models.CharField(max_length=25)
 
+    auth_user = models.OneToOneField(UserAuth, null=True, on_delete=models.SET_NULL)
+
 
 class Product(models.Model):
     TYPE = (
@@ -20,6 +22,7 @@ class Product(models.Model):
     price = models.FloatField()
     discount_price = models.FloatField()
     discount = models.IntegerField()
+    image = models.CharField(max_length=100)
 
     type = models.CharField(max_length=10, choices=TYPE)
 
